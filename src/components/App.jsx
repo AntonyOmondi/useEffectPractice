@@ -1,23 +1,31 @@
 import UserList from "../components/UserList"
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
+import Search from "./Search"
 
+export default function App() {
+  const [users, setUsers] = useState([]);
 
-function App() {
-    const [users, setUsers] = useState([]);
+  const [url, setUrl] = useState("https://jsonplaceholder.typicode.com/users/");
 
-    useEffect(() => {
-      fetch("https://jsonplaceholder.typicode.com/users/")
+  useEffect(() => {
+    fetch(url)
       .then(response => response.json())
       .then(data => {
-        setUsers(data)
+        setUsers(Array.isArray(data) ? data : [data])
       })
-    }, [])
+  }, [url])
 
-    return (
-        <>
-          <UserList users={users}/>
-        </>
-    )
+  function getRandomUser() {
+    let randomNo = Math.floor(Math.random() * 10) + 1
+    setUrl(`https://jsonplaceholder.typicode.com/users/${randomNo}`)
+  }
+
+
+  return (
+    <>
+      {users ? <UserList users={users} getRandomUser={getRandomUser} /> : <p>Loading users...</p>}
+    </>
+  )
 }
 
-export default App
+
