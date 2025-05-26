@@ -20,10 +20,14 @@ export default function App() {
     setUrl(`https://jsonplaceholder.typicode.com/users/${randomNo}`)
   }
 
+  function getAllUser(){
+    setUrl("https://jsonplaceholder.typicode.com/users/")
+  }
+
 
   return (
     <>
-      {users ? <UserList users={users} getRandomUser={getRandomUser} /> : <p>Loading users...</p>}
+      {users ? <UserList users={users} getRandomUser={getRandomUser} getAllUser={getAllUser}/> : <p>Loading users...</p>}
     </>
   )
 }
